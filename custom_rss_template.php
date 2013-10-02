@@ -2,25 +2,29 @@
 
 <?php 
 
-//Categories
-	echo '<h3 style="font-size:14px;color:#999;margin-bottom:20px;">Choose by Category</h3>';
+	//Categories
+	echo '<h3>Choose by Category</h3>';
 		
-	$listCat = get_categories('exclude=131,1381'); 
-							
+	// get all the categories	
+	$listCat = get_categories(); // include any categories that should be excluded here
+	
+	// for each category, loop through the following, creating a checkbox input						
 	foreach ($listCat as $cat) {
 	  	$checkbox = '<p class="basic"><input name="category[]" type="checkbox" value="'.$cat->cat_ID.'" />';
 		$checkbox .= '<label>'.$cat->cat_name.'</label></p>';
 		echo $checkbox;
 	}
 							
-//Authors
-	echo '<h3 style="font-size:14px;color:#999;margin-bottom:20px;">Choose by Author</h3>';
+	//Authors
+	echo '<h3>Choose by Author</h3>';
 
+	// get all of the blog's authors
 	$listAuthor = get_users_of_blog();
 	
 	//User must have posted since following date to appear - year month day
 	$cutOffDate = 20100101; 
 	
+	// loop through each author and outut a checkbox
 	foreach ($listAuthor as $author) {
 		$user = get_userdata($author->user_id);
 		$lastpost = query_posts('author='.$user->ID.'&posts_per_page=1');
